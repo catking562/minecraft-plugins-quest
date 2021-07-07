@@ -77,12 +77,10 @@ public class main extends JavaPlugin implements Listener {
         	}
         }
         //playerconfig
-        ArrayList<String> plli = (ArrayList<String>) playerconfig.getStringList("playerlist");
-        if(plli.size() != 0) {
-        	for(String pn : plli) {
-        		OfflinePlayer offp = Bukkit.getOfflinePlayer(pn);
-        		ArrayList<String> clli = (ArrayList<String>) playerconfig.getStringList(pn + ".clearlist");
-        		ArrayList<String> qeli = (ArrayList<String>) playerconfig.getStringList(pn + ".questinglist");
+        if(Bukkit.getOfflinePlayers().length != 0) {
+        	for(OfflinePlayer offp : Bukkit.getOfflinePlayers()) {
+        		ArrayList<String> clli = (ArrayList<String>) playerconfig.getStringList(offp.getName() + ".clearlist");
+        		ArrayList<String> qeli = (ArrayList<String>) playerconfig.getStringList(offp.getName() + ".questinglist");
         		if(clli.size() != 0) {
         			clearquest.put(offp, clli);
         		}
@@ -99,6 +97,12 @@ public class main extends JavaPlugin implements Listener {
 		} catch (IOException e) {
 			Bukkit.broadcastMessage("§4플러그인이 정상적으로 작동되지 않았습니다. (quest 플러그인)");
 		}
+        file.put("message", messagefile);
+        config.put("message", messageconfig);
+        file.put("quest", questfile);
+        config.put("quest", questconfig);
+        file.put("player", playerfile);
+        config.put("player", playerconfig);
         return;
 	}
 	
@@ -417,9 +421,35 @@ public class main extends JavaPlugin implements Listener {
 	
 	@EventHandler
 	public void worldsave(WorldSaveEvent e) {
+		YamlConfiguration questconfig = config.get("quest");
+		YamlConfiguration playerconfig = config.get("player");
+		//questconfig
+		ArrayList<String> quli = new ArrayList<String>();
+		for(Map.Entry<String, String> questname : main.questname.entrySet()) {
+			quli.add(questname.getKey());
+			questconfig.set(questname.getKey() + ".name", questname.getValue());
+			questconfig.set(questname.getKey() + ".lore", questlore.get(questname.getKey()));
+			questconfig.set(questname.getKey() + ".clearitem", questclearitem.get(questname.getKey()));
+			questconfig.set(questname.getKey() + ".repeating", repeatingquest.get(questname.getKey()));
+		}
+		//playerconfig
+		if(Bukkit.getOfflinePlayers().length != 0) {
+        	for(OfflinePlayer offp : Bukkit.getOfflinePlayers()) {
+        		ArrayList<String> clli = clearquest.get(offp);
+        		ArrayList<String> qeli = questing.get(offp);
+        		if(clli.size() != 0) {
+        			playerconfig.set(offp.getName() + ".clearlist", clli);
+        		}
+        		if(qeli.size() != 0) {
+        			playerconfig.set(offp.getName() + ".questinglist", qeli);
+        		}
+        	}
+        }
 		try {
 			for (Map.Entry<String, File> file : main.file.entrySet()) {
-				config.get(file.getKey()).save(main.file.get(file.getKey()));
+				if(!file.getKey().equalsIgnoreCase("message")) {
+					config.get(file.getKey()).save(main.file.get(file.getKey()));
+				}
 			}
 		} catch (Exception e2) {
 			System.out.println("데이터가 정상적으로 저장됨 (quest 플러그인)");
