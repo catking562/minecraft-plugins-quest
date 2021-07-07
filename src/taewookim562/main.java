@@ -198,7 +198,7 @@ public class main extends JavaPlugin implements Listener {
 	}
 	
 	public void setoptionquest(Player p, String string) {
-		Inventory inv = Bukkit.createInventory(p, 54, "§7퀘스트 옵션 변경");
+		Inventory inv = Bukkit.createInventory(p, 63, "§7퀘스트 옵션 변경");
 		ItemStack i = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 		ItemMeta m = i.getItemMeta();
 		m.setDisplayName("");
@@ -213,6 +213,8 @@ public class main extends JavaPlugin implements Listener {
 		ItemStack i5 = new ItemStack(Material.NETHER_STAR);
 		ItemStack i6 = new ItemStack(Material.CHEST_MINECART);
 		ItemStack i7 = new ItemStack(Material.MINECART);
+		ItemStack i8 = new ItemStack(Material.PLAYER_HEAD);
+		ItemStack i9 = new ItemStack(Material.OAK_SIGN);
 		ItemMeta m1 = i1.getItemMeta();
 		ItemMeta m2 = i2.getItemMeta();
 		ItemMeta m3 = i3.getItemMeta();
@@ -220,6 +222,8 @@ public class main extends JavaPlugin implements Listener {
 		ItemMeta m5 = i5.getItemMeta();
 		ItemMeta m6 = i6.getItemMeta();
 		ItemMeta m7 = i7.getItemMeta();
+		ItemMeta m8 = i8.getItemMeta();
+		ItemMeta m9 = i9.getItemMeta();
 		m1.setDisplayName("§a이름변경");
 		m2.setDisplayName("§5선행퀘스트 설정");
 		m3.setDisplayName("§6클리어 조건 설정");
@@ -227,6 +231,8 @@ public class main extends JavaPlugin implements Listener {
 		m5.setDisplayName("§b보상설정");
 		m6.setDisplayName("§c클리어 시 아이템 회수여부");
 		m7.setDisplayName("§d반복퀘스트여부");
+		m8.setDisplayName("§fnpc설정");
+		m9.setDisplayName("§1스토리설정");
 		m1.setLore(Arrays.asList("§7퀘스트 이름을 변경합니다."));
 		m2.setLore(Arrays.asList("§7이 퀘스트를 시작하기 위한 조건으로, 먼저 클리어 해야하는 퀘스트를 설정합니다."));
 		m3.setLore(Arrays.asList("§7퀘스트 클리어를 위해 필요한 아이템을 설정 할 수 있습니다."));
@@ -246,6 +252,8 @@ public class main extends JavaPlugin implements Listener {
 		}else {
 			m7.setLore(Arrays.asList("§c퀘스트를 클리어하면 클리어목록에 등재되고 다시 할 수 없음."));
 		}
+		m8.setLore(Arrays.asList("§7이 퀘스트를 적용할 npc를 설정합니다."));
+		m9.setLore(Arrays.asList("§7npc와의 소통을 위한 시스템"));
 		i1.setItemMeta(m1);
 		i2.setItemMeta(m2);
 		i3.setItemMeta(m3);
@@ -253,13 +261,17 @@ public class main extends JavaPlugin implements Listener {
 		i5.setItemMeta(m5);
 		i6.setItemMeta(m6);
 		i7.setItemMeta(m7);
+		i8.setItemMeta(m8);
+		i9.setItemMeta(m9);
 		inv.setItem(10, i1);
 		inv.setItem(12, i2);
 		inv.setItem(14, i3);
 		inv.setItem(16, i4);
-		inv.setItem(38, i5);
-		inv.setItem(41, i6);
-		inv.setItem(44, i7);
+		inv.setItem(28, i5);
+		inv.setItem(30, i6);
+		inv.setItem(32, i7);
+		inv.setItem(34, i8);
+		inv.setItem(49, i9);
 		setquestoption.put(p, string);
 		p.openInventory(inv);
 	}
