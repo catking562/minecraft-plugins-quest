@@ -1,8 +1,8 @@
 name: quest
-version: 0.2
+version: 0.3
 main: taewookim562.main
 description: 마인크래프트 서버내에 퀘스트를 만들어보세요!
-authors: taewookim562
+authors: [taewookim562]
 website: https://github.com/catking562/minecraft-plugins-quest.git
 
 commands:
@@ -31,6 +31,6 @@ permissions:
     default: true
   quest.admin:
     description: quest admin permissions
-    default: true
+    default: op
     children:
       quest.user: true
